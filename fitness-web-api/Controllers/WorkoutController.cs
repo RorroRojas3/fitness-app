@@ -39,6 +39,22 @@ namespace fitness_web_api.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetChestExcercise(Guid id)
+        {
+            try
+            {
+                _logger.LogInformation($"GetChestExcercises - Started");
+
+                return StatusCode(StatusCodes.Status200OK);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"GetChestExcercies - Failed: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Servcer error");
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> PostChestExcercises()
         {
@@ -54,4 +70,37 @@ namespace fitness_web_api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Internal Servcer error");
             }
         }
+
+        [HttpPut]
+        public async Task<IActionResult> PutChestExcercise()
+        {
+            try
+            {
+                _logger.LogInformation($"PostChestExcercises - Started");
+
+                return StatusCode(StatusCodes.Status200OK);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"PostChestExcercises - Failed: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Servcer error");
+            }
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteChestExcercise(Guid id)
+        {
+            try
+            {
+                _logger.LogInformation($"PostChestExcercises - Started");
+
+                return StatusCode(StatusCodes.Status200OK);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"PostChestExcercises - Failed: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Servcer error");
+            }
+        }
     }
+}
