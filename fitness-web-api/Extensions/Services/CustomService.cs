@@ -14,7 +14,6 @@ namespace fitness_web_api.Extensions.Services
         {
             services.AddScoped<IItemService, ItemService>();
             services.AddScoped<IFileService, FileService>();
-            services.AddScoped<IAzureBlobStorageService, AzureBlobStorageService>();
         }
 
     }
