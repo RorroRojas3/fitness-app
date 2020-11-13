@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/fitness-web-api.csproj",
+                "${workspaceFolder}/net-core-api-boiler-plate/net-core-api-boiler-plate.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/fitness-web-api.csproj",
+                "${workspaceFolder}/net-core-api-boiler-plate/net-core-api-boiler-plate.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -32,7 +32,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/fitness-web-api.csproj",
+                "${workspaceFolder}/net-core-api-boiler-plate/net-core-api-boiler-plate.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
