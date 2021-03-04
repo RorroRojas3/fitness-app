@@ -57,7 +57,7 @@ namespace Rodrigo.Tech.Fitness.Web.API
         /// <param name="provider"></param>
         /// <param name="db"></param>
         public void Configure(IApplicationBuilder app, IApiVersionDescriptionProvider provider,
-                                DatabaseContext db)
+                                FitnessDatabase db)
         {
             Log.Information($"Using Exception middleware");
             app.UseExceptionMiddleware();

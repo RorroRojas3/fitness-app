@@ -2,9 +2,9 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
-using Rodrigo.Tech.Service.Interface;
+using Rodrigo.Tech.Service.Interface.Common;
 
-namespace Rodrigo.Tech.Service.Implementation
+namespace Rodrigo.Tech.Service.Implementation.Common
 {
     public class CacheService : ICacheService
     {

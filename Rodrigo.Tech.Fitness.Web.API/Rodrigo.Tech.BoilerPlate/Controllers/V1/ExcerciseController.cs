@@ -2,6 +2,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Rodrigo.Tech.Model.Request.V1;
+using Rodrigo.Tech.Model.Response.V1;
+using Rodrigo.Tech.Service.Interface.V1;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,14 +15,17 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("1")]
-    [Authorize]
+    //[Authorize]
     public class ExcerciseController : ControllerBase
     {
         private readonly ILogger _logger;
+        private readonly IExcerciseService _excerciseService;
 
-        public ExcerciseController(ILogger<ExcerciseController> logger)
+        public ExcerciseController(ILogger<ExcerciseController> logger,
+                                    IExcerciseService excerciseService)
         {
             _logger = logger;
+            _excerciseService = excerciseService;
         }
 
         /// <summary>
@@ -27,10 +34,15 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
         /// <returns></returns>
         [HttpGet]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(List<object>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IList<ExcerciseResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetExcercises()
         {
-            return null;
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(GetExcercises)} - Started");
+
+            var result = await _excerciseService.GetExcercises();
+
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(GetExcercises)} - Finished");
+            return StatusCode(result.HttpStatusCode, result.Data);
         }
 
         /// <summary>
@@ -40,10 +52,17 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
         [HttpGet]
         [Route("{id}")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(List<object>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ExcerciseResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetExcercise(Guid id)
         {
-            return null;
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(GetExcercise)} - Started, " +
+                $"{nameof(id)}: {id}");
+
+            var result = await _excerciseService.GetExcercise(id);
+
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(GetExcercise)} - Finished, " +
+                $"{nameof(id)}: {id}");
+            return StatusCode(result.HttpStatusCode, result.Data);
         }
 
         /// <summary>
@@ -54,18 +73,26 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
         /// Sample request:
         ///
         ///     {
-        ///        "name": "example",
-        ///        "value": "example"
+        ///        "name": "string",
+        ///        "description": "string"
+        ///        "type": int
         ///     }
         ///
         /// </remarks>
         /// <returns></returns>
         [HttpPost]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(object), StatusCodes.Status201Created)]
-        public async Task<IActionResult> PostExcercise([FromBody] object request)
+        [ProducesResponseType(typeof(ExcerciseResponse), StatusCodes.Status201Created)]
+        public async Task<IActionResult> PostExcercise([FromBody] ExcerciseRequest request)
         {
-            return null;
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(PostExcercise)} - Started, " +
+                 $"{nameof(ExcerciseRequest)}: {JsonConvert.SerializeObject(request)}");
+
+            var result = await _excerciseService.PostExcercise(request);
+
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(PostExcercise)} - Finished, " +
+                 $"{nameof(ExcerciseRequest)}: {JsonConvert.SerializeObject(request)}");
+            return StatusCode(result.HttpStatusCode, result.Data);
         }
 
         /// <summary>
@@ -77,8 +104,9 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
         /// Sample request:
         ///
         ///     {
-        ///        "name": "example",
-        ///        "value": "example"
+        ///        "name": "string",
+        ///        "description": "string"
+        ///        "type": int
         ///     }
         ///
         /// </remarks>
@@ -86,10 +114,17 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
         [HttpPut]
         [Route("{id}")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
-        public async Task<IActionResult> PutExcercise(Guid id, [FromBody] object request)
+        [ProducesResponseType(typeof(ExcerciseRequest), StatusCodes.Status200OK)]
+        public async Task<IActionResult> PutExcercise(Guid id, [FromBody] ExcerciseRequest request)
         {
-            return null;
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(PutExcercise)} - Started, " +
+                 $"{nameof(ExcerciseRequest)}: {JsonConvert.SerializeObject(request)}");
+
+            var result = await _excerciseService.PutExcercise(id, request);
+
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(PutExcercise)} - Finished, " +
+                 $"{nameof(ExcerciseRequest)}: {JsonConvert.SerializeObject(request)}");
+            return StatusCode(result.HttpStatusCode, result.Data);
         }
 
         /// <summary>
@@ -102,7 +137,14 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteExcercise(Guid id)
         {
-            return null;
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(DeleteExcercise)} - Started, " +
+                $"{nameof(id)}: {id}");
+
+            var result = await _excerciseService.DeleteExcercise(id);
+
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(DeleteExcercise)} - Finished, " +
+                $"{nameof(id)}: {id}");
+            return StatusCode(result.HttpStatusCode, result.Data);
         }
     }
 }

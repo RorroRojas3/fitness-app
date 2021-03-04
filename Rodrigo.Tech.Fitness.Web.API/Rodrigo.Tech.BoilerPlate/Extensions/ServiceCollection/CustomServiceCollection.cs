@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Rodrigo.Tech.Service.Implementation;
-using Rodrigo.Tech.Service.Interface;
+using Rodrigo.Tech.Service.Interface.V1;
 
 namespace Rodrigo.Tech.Fitness.Web.API.Extensions.ServiceCollection
 {
@@ -12,8 +12,8 @@ namespace Rodrigo.Tech.Fitness.Web.API.Extensions.ServiceCollection
         /// <param name="services"></param>
         public static void AddCustomService(this IServiceCollection services)
         {
-            services.AddScoped<IItemService, ItemService>();
             services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IExcerciseService, ExcerciseService>();
         }
     }
 }

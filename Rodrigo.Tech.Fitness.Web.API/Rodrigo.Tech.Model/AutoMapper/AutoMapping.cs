@@ -1,8 +1,7 @@
 using AutoMapper;
-using Rodrigo.Tech.Model.Requests;
-using Rodrigo.Tech.Model.Response;
-using Rodrigo.Tech.Respository.Tables.Context;
-using Rodrigo.Tech.Respository.Tables.Cosmos;
+using Rodrigo.Tech.Model.Request.V1;
+using Rodrigo.Tech.Model.Response.V1;
+using Rodrigo.Tech.Repository.Tables.Context;
 
 namespace Rodrigo.Tech.Model.AutoMapper
 {
@@ -10,10 +9,19 @@ namespace Rodrigo.Tech.Model.AutoMapper
     {
         public AutoMapping()
         {
+            FileMap();
+            ExcerciseMap();
+        }
+
+        private void FileMap()
+        {
             CreateMap<File, FileResponse>();
-            CreateMap<ItemRequest, ItemCosmos>();
-            CreateMap<ItemRequest, Item>();
-            CreateMap<Item, ItemResponse>();
+        }
+
+        private void ExcerciseMap()
+        {
+            CreateMap<ExcerciseRequest, Excercise>();
+            CreateMap<Excercise, ExcerciseResponse>();
         }
     }
 }

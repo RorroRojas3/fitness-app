@@ -1,20 +1,17 @@
 ﻿using System.Net;
 
-namespace Rodrigo.Tech.Model.Response
+namespace Rodrigo.Tech.Model.Response.V1
 {
     public class ApiResponse<T>
     {
-        public ApiResponse(HttpStatusCode httpStatusCode, T data = default, string message = null)
+        public ApiResponse(HttpStatusCode httpStatusCode, T data = default)
         {
             HttpStatusCode = (int)httpStatusCode;
             Data = data;
-            Message = message;
         }
 
         public int HttpStatusCode { get; set; }
 
         public T Data { get; set; }
-
-        public string Message { get; set; }
     }
 }

@@ -1,12 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Rodrigo.Tech.Repository.Tables.Context;
-using Rodrigo.Tech.Respository.Tables.Context;
 
 namespace Rodrigo.Tech.Respository.Context
 {
-    public class DatabaseContext : DbContext
+    public class FitnessDatabase : DbContext
     {
-        public DatabaseContext(DbContextOptions<DatabaseContext> options)
+        public FitnessDatabase(DbContextOptions<FitnessDatabase> options)
         : base(options)
         {
         }
@@ -22,11 +21,11 @@ namespace Rodrigo.Tech.Respository.Context
         }
 
         #region Tables
-        public DbSet<Item> Items { get; set; }
+        public virtual DbSet<File> Files { get; set; }
 
-        public DbSet<File> Files { get; set; }
+        public virtual DbSet<Cache> Caches { get; set; }
 
-        public DbSet<Cache> Caches { get; set; }
+        public virtual DbSet<Excercise> Excercises { get; set; }
         #endregion
     }
 }

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net.Http.Json;
-using Rodrigo.Tech.Service.Interface;
+using Rodrigo.Tech.Service.Interface.Common;
 
-namespace Rodrigo.Tech.Service.Implementation
+namespace Rodrigo.Tech.Service.Implementation.Common
 {
     public class HttpClientService : IHttpClientService
     {

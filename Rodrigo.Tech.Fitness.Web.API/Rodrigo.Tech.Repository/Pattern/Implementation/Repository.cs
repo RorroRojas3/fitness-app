@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using Rodrigo.Tech.Respository.Pattern.Interface;
 using Rodrigo.Tech.Respository.Context;
+using Rodrigo.Tech.Repository.Pattern.Interface;
 
-namespace Rodrigo.Tech.Respository.Pattern.Implementation
+namespace Rodrigo.Tech.Repository.Pattern.Implementation
 {
     public class Repository<T> : IRepository<T> where T : class, IEntity
     {
-        protected readonly DatabaseContext _dbContext;
+        protected readonly FitnessDatabase _dbContext;
         private readonly DbSet<T> _entities;
 
-        public Repository(DatabaseContext dbContext)
+        public Repository(FitnessDatabase dbContext)
         {
             _dbContext = dbContext;
             _entities = dbContext.Set<T>();

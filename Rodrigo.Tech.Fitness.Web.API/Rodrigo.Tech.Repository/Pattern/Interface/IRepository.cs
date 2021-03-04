@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Rodrigo.Tech.Respository.Pattern.Interface
+namespace Rodrigo.Tech.Repository.Pattern.Interface
 {
     public interface IRepository<T> where T : class, IEntity
     {

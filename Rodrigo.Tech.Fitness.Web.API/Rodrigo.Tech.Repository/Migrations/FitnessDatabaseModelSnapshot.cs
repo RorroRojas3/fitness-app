@@ -8,8 +8,8 @@ using Rodrigo.Tech.Respository.Context;
 
 namespace Rodrigo.Tech.Repository.Migrations
 {
-    [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(FitnessDatabase))]
+    partial class FitnessDatabaseModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -43,7 +43,31 @@ namespace Rodrigo.Tech.Repository.Migrations
                     b.ToTable("Cache");
                 });
 
-            modelBuilder.Entity("Rodrigo.Tech.Respository.Tables.Context.File", b =>
+            modelBuilder.Entity("Rodrigo.Tech.Repository.Tables.Context.Excercise", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Excercise");
+                });
+
+            modelBuilder.Entity("Rodrigo.Tech.Repository.Tables.Context.File", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -64,25 +88,6 @@ namespace Rodrigo.Tech.Repository.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("File", "Example");
-                });
-
-            modelBuilder.Entity("Rodrigo.Tech.Respository.Tables.Context.Item", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Item", "Example");
                 });
 #pragma warning restore 612, 618
         }

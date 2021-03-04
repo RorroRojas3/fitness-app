@@ -1,14 +1,14 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Rodrigo.Tech.Model.Response;
-using Rodrigo.Tech.Respository.Pattern.Interface;
-using Rodrigo.Tech.Service.Interface;
+using Rodrigo.Tech.Model.Response.V1;
+using Rodrigo.Tech.Repository.Pattern.Interface;
+using Rodrigo.Tech.Service.Interface.V1;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using File = Rodrigo.Tech.Respository.Tables.Context.File;
+using File = Rodrigo.Tech.Repository.Tables.Context.File;
 
 namespace Rodrigo.Tech.Service.Implementation
 {

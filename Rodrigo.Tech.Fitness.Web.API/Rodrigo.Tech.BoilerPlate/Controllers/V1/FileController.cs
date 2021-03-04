@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Rodrigo.Tech.Model.Response;
-using Rodrigo.Tech.Service.Interface;
+using Rodrigo.Tech.Model.Response.V1;
+using Rodrigo.Tech.Service.Interface.V1;
 
 namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
 {

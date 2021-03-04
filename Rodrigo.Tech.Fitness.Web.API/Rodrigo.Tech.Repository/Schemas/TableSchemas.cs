@@ -1,4 +1,4 @@
-namespace Rodrigo.Tech.Respository.Schemas
+namespace Rodrigo.Tech.Repository.Schemas
 {
     public static class TableSchemas
     {

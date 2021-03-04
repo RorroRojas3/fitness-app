@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Rodrigo.Tech.Service.Interface
+namespace Rodrigo.Tech.Service.Interface.Common
 {
     public interface IHttpClientService
     {

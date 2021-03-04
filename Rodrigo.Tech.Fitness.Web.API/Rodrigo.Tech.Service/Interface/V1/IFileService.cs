@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Rodrigo.Tech.Model.Response;
-using Rodrigo.Tech.Respository.Tables.Context;
+using Rodrigo.Tech.Model.Response.V1;
+using Rodrigo.Tech.Repository.Tables.Context;
 
-namespace Rodrigo.Tech.Service.Interface
+namespace Rodrigo.Tech.Service.Interface.V1
 {
     public interface IFileService
     {

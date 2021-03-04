@@ -1,10 +1,10 @@
-using Rodrigo.Tech.Respository.Pattern.Interface;
-using Rodrigo.Tech.Respository.Schemas;
+using Rodrigo.Tech.Repository.Pattern.Interface;
+using Rodrigo.Tech.Repository.Schemas;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Rodrigo.Tech.Respository.Tables.Context
+namespace Rodrigo.Tech.Repository.Tables.Context
 {
     [Table(nameof(File), Schema = nameof(TableSchemas.Example))]
     public class File : IEntity

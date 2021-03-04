@@ -1,24 +1,27 @@
-using Rodrigo.Tech.Respository.Pattern.Interface;
-using Rodrigo.Tech.Respository.Schemas;
+﻿using Rodrigo.Tech.Repository.Pattern.Interface;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Rodrigo.Tech.Respository.Tables.Context
+namespace Rodrigo.Tech.Repository.Tables.Context
 {
     [Serializable]
-    [Table(nameof(Item), Schema = nameof(TableSchemas.Example))]
-    public class Item : IEntity
+    [Table(nameof(Excercise))]
+    public class Excercise : IEntity
     {
         [Key]
-        [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         [Required]
+        [MaxLength(100)]
         public string Name { get; set; }
 
         [Required]
-        public string Value { get; set; }
+        [MaxLength(200)]
+        public string Description { get; set; }
+
+        [Required]
+        public int Type { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 using System;
 
-namespace Rodrigo.Tech.Model.Response
+namespace Rodrigo.Tech.Model.Response.V1
 {
     public class FileResponse
     {

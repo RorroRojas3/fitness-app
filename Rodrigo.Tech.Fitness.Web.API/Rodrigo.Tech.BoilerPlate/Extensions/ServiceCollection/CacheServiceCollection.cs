@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Rodrigo.Tech.Service.Implementation;
-using Rodrigo.Tech.Service.Interface;
+using Rodrigo.Tech.Service.Implementation.Common;
+using Rodrigo.Tech.Service.Interface.Common;
 
 namespace Rodrigo.Tech.Fitness.Web.API.Extensions.ServiceCollection
 {

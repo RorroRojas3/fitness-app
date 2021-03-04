@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Rodrigo.Tech.Repository.Migrations
 {
-    public partial class FirsMigration : Migration
+    public partial class ExcerciseTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,6 +26,20 @@ namespace Rodrigo.Tech.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Excercise",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Excercise", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "File",
                 schema: "Example",
                 columns: table => new
@@ -39,20 +53,6 @@ namespace Rodrigo.Tech.Repository.Migrations
                 {
                     table.PrimaryKey("PK_File", x => x.Id);
                 });
-
-            migrationBuilder.CreateTable(
-                name: "Item",
-                schema: "Example",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Item", x => x.Id);
-                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -61,11 +61,10 @@ namespace Rodrigo.Tech.Repository.Migrations
                 name: "Cache");
 
             migrationBuilder.DropTable(
-                name: "File",
-                schema: "Example");
+                name: "Excercise");
 
             migrationBuilder.DropTable(
-                name: "Item",
+                name: "File",
                 schema: "Example");
         }
     }
