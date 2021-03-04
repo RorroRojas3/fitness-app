@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Rodrigo.Tech.Model.Enums.V1;
 using Rodrigo.Tech.Model.Request.V1;
 using Rodrigo.Tech.Model.Response.V1;
 using Rodrigo.Tech.Service.Interface.V1;
@@ -144,6 +145,23 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
 
             _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(DeleteExcercise)} - Finished, " +
                 $"{nameof(id)}: {id}");
+            return StatusCode(result.HttpStatusCode, result.Data);
+        }
+
+        /// <summary>
+        ///     Gets excercise types
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("Types")]
+        [ProducesResponseType(typeof(IDictionary<string, int>), StatusCodes.Status200OK)]
+        public IActionResult GetExerciseTypes()
+        {
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(GetExerciseTypes)} - Started");
+
+            var result = _excerciseService.GetExcerciseTypes();
+
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(GetExerciseTypes)} - Finished");
             return StatusCode(result.HttpStatusCode, result.Data);
         }
     }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Rodrigo.Tech.Model.Enums.V1;
 using Rodrigo.Tech.Model.Request.V1;
 using Rodrigo.Tech.Model.Response.V1;
 using Rodrigo.Tech.Repository.Pattern.Interface;
@@ -8,6 +9,7 @@ using Rodrigo.Tech.Repository.Tables.Context;
 using Rodrigo.Tech.Service.Interface.V1;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -143,6 +145,19 @@ namespace Rodrigo.Tech.Service.Implementation
                 $"{nameof(id)}: {id}, " +
                 $"{nameof(ExcerciseRequest)}: {JsonConvert.SerializeObject(request)}");
             return new ApiResponse<ExcerciseResponse>(HttpStatusCode.OK, mappedExcercise);
+        }
+
+        /// <inheritdoc/>
+        public ApiResponse<IDictionary<string, int>> GetExcerciseTypes()
+        {
+            _logger.LogInformation($"{nameof(ExcerciseService)} - {nameof(GetExcerciseTypes)} - Started");
+
+            var excerciseTypes = Enum.GetValues(typeof(ExcerciseTypeEnum))
+                                   .Cast<ExcerciseTypeEnum>()
+                                   .ToDictionary(x => x.ToString(), x => (int)x);
+
+            _logger.LogInformation($"{nameof(ExcerciseService)} - {nameof(GetExcerciseTypes)} - Finished");
+            return new ApiResponse<IDictionary<string, int>>(HttpStatusCode.OK, excerciseTypes);
         }
     }
 }

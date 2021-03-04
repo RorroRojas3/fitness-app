@@ -1,4 +1,5 @@
-﻿using Rodrigo.Tech.Model.Request.V1;
+﻿using Rodrigo.Tech.Model.Enums.V1;
+using Rodrigo.Tech.Model.Request.V1;
 using Rodrigo.Tech.Model.Response.V1;
 using System;
 using System.Collections.Generic;
@@ -42,5 +43,11 @@ namespace Rodrigo.Tech.Service.Interface.V1
         /// <param name="id"></param>
         /// <returns></returns>
         Task<ApiResponse<bool>> DeleteExcercise(Guid id);
+
+        /// <summary>
+        ///     Gets list of excercise types
+        /// </summary>
+        /// <returns></returns>
+        ApiResponse<IDictionary<string, int>> GetExcerciseTypes();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rodrigo.Tech.Model.Enums.V1;
+using System;
 
 namespace Rodrigo.Tech.Model.Response.V1
 {
@@ -10,6 +11,6 @@ namespace Rodrigo.Tech.Model.Response.V1
 
         public string Description { get; set; }
 
-        public int Type { get; set; }
+        public ExcerciseTypeEnum Type { get; set; }
     }
 }
