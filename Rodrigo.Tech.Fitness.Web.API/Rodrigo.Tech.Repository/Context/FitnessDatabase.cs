@@ -17,7 +17,9 @@ namespace Rodrigo.Tech.Respository.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            modelBuilder.Entity<ExcerciseTypeMapping>()
+                .HasIndex(c => c.ExcerciseTypeId)
+                .IsUnique();
         }
 
         #region Tables
@@ -26,6 +28,8 @@ namespace Rodrigo.Tech.Respository.Context
         public virtual DbSet<Cache> Caches { get; set; }
 
         public virtual DbSet<Excercise> Excercises { get; set; }
+
+        public virtual DbSet<ExcerciseTypeMapping> ExcerciseTypeMappings { get; set; }
         #endregion
     }
 }

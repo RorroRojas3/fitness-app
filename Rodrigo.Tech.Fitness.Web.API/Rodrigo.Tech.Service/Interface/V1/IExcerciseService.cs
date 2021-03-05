@@ -1,4 +1,5 @@
-﻿using Rodrigo.Tech.Model.Enums.V1;
+﻿using Microsoft.AspNetCore.Http;
+using Rodrigo.Tech.Model.Enums.V1;
 using Rodrigo.Tech.Model.Request.V1;
 using Rodrigo.Tech.Model.Response.V1;
 using System;
@@ -49,5 +50,13 @@ namespace Rodrigo.Tech.Service.Interface.V1
         /// </summary>
         /// <returns></returns>
         ApiResponse<IDictionary<string, int>> GetExcerciseTypes();
+
+        /// <summary>
+        ///     Assigns Icon to Excercise type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="formFile"></param>
+        /// <returns></returns>
+        Task<ApiResponse<object>> PostExcerciseTypeIcon(ExcerciseTypeEnum id, IFormFile formFile);
     }
 }

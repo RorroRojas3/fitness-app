@@ -164,5 +164,22 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
             _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(GetExerciseTypes)} - Finished");
             return StatusCode(result.HttpStatusCode, result.Data);
         }
+
+        /// <summary>
+        ///     Assign icon to ExcerciseType excercise types
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("Types/Icons/{id}")]
+        [ProducesResponseType(typeof(object), StatusCodes.Status201Created)]
+        public async Task<IActionResult> PostExcerciseTypeIcon(ExcerciseTypeEnum id, IFormFile formFile)
+        {
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(PostExcerciseTypeIcon)} - Started");
+
+            var result = await _excerciseService.PostExcerciseTypeIcon(id, formFile);
+
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(PostExcerciseTypeIcon)} - Finished");
+            return StatusCode(result.HttpStatusCode, result.Data);
+        }
     }
 }

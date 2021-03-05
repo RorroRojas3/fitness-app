@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Rodrigo.Tech.Model.Enums.V1;
@@ -9,6 +10,7 @@ using Rodrigo.Tech.Repository.Tables.Context;
 using Rodrigo.Tech.Service.Interface.V1;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -20,6 +22,7 @@ namespace Rodrigo.Tech.Service.Implementation
         private readonly ILogger _logger;
         private readonly IMapper _mapper;
         private readonly IRepository<Excercise> _excerciseRepository;
+        private readonly IRepository<ExcerciseTypeMapping> _exerciseTypeMappingRepository;
 
         public ExcerciseService(ILogger<ExcerciseService> logger,
                                 IMapper mapper,
@@ -158,6 +161,31 @@ namespace Rodrigo.Tech.Service.Implementation
 
             _logger.LogInformation($"{nameof(ExcerciseService)} - {nameof(GetExcerciseTypes)} - Finished");
             return new ApiResponse<IDictionary<string, int>>(HttpStatusCode.OK, excerciseTypes);
+        }
+
+        /// <inheritdoc/>
+        public async Task<ApiResponse<object>> PostExcerciseTypeIcon(ExcerciseTypeEnum id, IFormFile formFile)
+        {
+            _logger.LogInformation($"{nameof(ExcerciseService)} - {nameof(PostExcerciseTypeIcon)} - Started, " +
+                $"{nameof(id)}: {id}");
+
+            var excerciseTypeIcon = _exerciseTypeMappingRepository.GetWithExpression(x => x.ExcerciseTypeId == (int)id);
+
+            if (excerciseTypeIcon == null)
+            {
+                _logger.LogError($"{nameof(ExcerciseService)} - {nameof(PostExcerciseTypeIcon)} - {excerciseTypeIcon} not found, " +
+                    $"{nameof(id)}: {id}");
+                return new ApiResponse<object>(HttpStatusCode.NotFound);
+            }
+
+            MemoryStream memoryStream = new MemoryStream();
+            await formFile.CopyToAsync(memoryStream);
+            var excerciseTypeMapping = new ExcerciseTypeMapping() { ExcerciseTypeId = (int)id, Icon = memoryStream.ToArray() };
+            await _exerciseTypeMappingRepository.Add(excerciseTypeMapping);
+
+            _logger.LogInformation($"{nameof(ExcerciseService)} - {nameof(PostExcerciseTypeIcon)} - Finished, " +
+                $"{nameof(id)}: {id}");
+            return new ApiResponse<object>(HttpStatusCode.Created);
         }
     }
 }
