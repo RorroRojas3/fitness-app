@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Rodrigo.Tech.Model.Exceptions;
 
 namespace Rodrigo.Tech.Fitness.Web.API.Extensions.Applications
 {
@@ -57,12 +58,19 @@ namespace Rodrigo.Tech.Fitness.Web.API.Extensions.Applications
         /// <returns></returns>
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            context.Response.ContentType = "application/json";
             int statusCode = (int)HttpStatusCode.InternalServerError;
+            string errorMessage = "Internal server error";
+
+            if (exception is StatusCodeException statusCodeException)
+            {
+                statusCode = (int)statusCodeException.HttpStatusCode;
+                errorMessage = statusCodeException.Message;
+            }
+
             var result = JsonConvert.SerializeObject(new
             {
                 StatusCode = statusCode,
-                ErrorMessage = "Internal server error"
+                ErrorMessage = errorMessage
             });
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = statusCode;

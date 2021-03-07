@@ -3,7 +3,7 @@ using System.Net;
 
 namespace Rodrigo.Tech.Model.Exceptions
 {
-    public class StatusCodeException<T> : Exception
+    public class StatusCodeException : Exception
     {
         public StatusCodeException() { }
 
@@ -14,7 +14,7 @@ namespace Rodrigo.Tech.Model.Exceptions
         public StatusCodeException(string message, Exception inner)
         : base(message, inner) { }
 
-        public StatusCodeException(HttpStatusCode httpStatusCode, T result, string message)
+        public StatusCodeException(HttpStatusCode httpStatusCode, object result, string message)
         : this(message)
         {
             HttpStatusCode = httpStatusCode;
@@ -23,6 +23,6 @@ namespace Rodrigo.Tech.Model.Exceptions
 
         public HttpStatusCode  HttpStatusCode {get; set;}
 
-        public T Result { get; set; }
+        public object Result { get; set; }
     }
 }
