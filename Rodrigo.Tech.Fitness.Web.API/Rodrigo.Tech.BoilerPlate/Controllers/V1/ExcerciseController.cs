@@ -166,6 +166,24 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
         }
 
         /// <summary>
+        ///     Gets image for an excercise icon
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("Types/Icons/{id}")]
+        [ProducesResponseType(typeof(FileStreamResult), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetExcerciseTypeIcon(ExcerciseTypeEnum id)
+        {
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(GetExcerciseTypeIcon)} - Started, " +
+                $"{nameof(id)}: {id}");
+
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(GetExcerciseTypeIcon)} - Finished, " +
+                $"{nameof(id)}: {id}");
+            return null;
+        }
+
+        /// <summary>
         ///     Assign icon to ExcerciseType excercise types
         /// </summary>
         /// <returns></returns>
@@ -180,6 +198,42 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
 
             _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(PostExcerciseTypeIcon)} - Finished");
             return StatusCode(result.HttpStatusCode, result.Data);
+        }
+
+        /// <summary>
+        ///     Updates icon for an excercise type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("Types/Icons/{id}")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        public async Task<IActionResult> PutExcerciseTypeIcon(ExcerciseTypeEnum id)
+        {
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(PutExcerciseTypeIcon)} - Started, " +
+                $"{nameof(id)}: {id}");
+
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(PutExcerciseTypeIcon)} - Finished, " +
+                $"{nameof(id)}: {id}");
+            return null;
+        }
+
+        /// <summary>
+        ///     Delete icon for an excercise type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("Types/Icons/{id}")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        public async Task<IActionResult> DeleteExcerciseTypeIcon(ExcerciseTypeEnum id)
+        {
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(DeleteExcerciseTypeIcon)} - Started, " +
+                $"{nameof(id)}: {id}");
+
+            _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(DeleteExcerciseTypeIcon)} - Finished, " +
+                $"{nameof(id)}: {id}");
+            return null;
         }
     }
 }
