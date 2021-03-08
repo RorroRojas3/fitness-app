@@ -4,11 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Rodrigo.Tech.Model.Enums.V1;
+using Rodrigo.Tech.Model.Exceptions;
 using Rodrigo.Tech.Model.Request.V1;
 using Rodrigo.Tech.Model.Response.V1;
 using Rodrigo.Tech.Service.Interface.V1;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
@@ -223,7 +225,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPut]
+        [HttpDelete]
         [Route("Types/Icons/{id}")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteExcerciseTypeIcon(ExcerciseTypeEnum id)

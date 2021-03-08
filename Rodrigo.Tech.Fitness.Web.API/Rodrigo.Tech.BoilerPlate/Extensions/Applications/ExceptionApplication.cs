@@ -70,7 +70,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Extensions.Applications
             var result = JsonConvert.SerializeObject(new
             {
                 StatusCode = statusCode,
-                ErrorMessage = errorMessage
+                Message = errorMessage
             });
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = statusCode;
