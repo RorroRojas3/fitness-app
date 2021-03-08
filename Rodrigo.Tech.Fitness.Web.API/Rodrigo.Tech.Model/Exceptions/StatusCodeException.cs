@@ -14,15 +14,12 @@ namespace Rodrigo.Tech.Model.Exceptions
         public StatusCodeException(string message, Exception inner)
         : base(message, inner) { }
 
-        public StatusCodeException(HttpStatusCode httpStatusCode, object result, string message)
+        public StatusCodeException(HttpStatusCode httpStatusCode, string message = null)
         : this(message)
         {
             HttpStatusCode = httpStatusCode;
-            Result = result;
         }
 
         public HttpStatusCode  HttpStatusCode {get; set;}
-
-        public object Result { get; set; }
     }
 }

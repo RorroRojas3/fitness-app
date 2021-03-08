@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Rodrigo.Tech.Service.Implementation;
+using Rodrigo.Tech.Service.Implementation.V1;
 using Rodrigo.Tech.Service.Interface.V1;
 
 namespace Rodrigo.Tech.Fitness.Web.API.Extensions.ServiceCollection

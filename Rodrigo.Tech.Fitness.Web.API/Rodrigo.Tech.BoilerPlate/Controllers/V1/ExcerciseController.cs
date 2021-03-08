@@ -45,7 +45,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
             var result = await _excerciseService.GetExcercises();
 
             _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(GetExcercises)} - Finished");
-            return StatusCode(result.HttpStatusCode, result.Data);
+            return StatusCode(StatusCodes.Status200OK, result);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
 
             _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(GetExcercise)} - Finished, " +
                 $"{nameof(id)}: {id}");
-            return StatusCode(result.HttpStatusCode, result.Data);
+            return StatusCode(StatusCodes.Status200OK, result);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
 
             _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(PostExcercise)} - Finished, " +
                  $"{nameof(ExcerciseRequest)}: {JsonConvert.SerializeObject(request)}");
-            return StatusCode(result.HttpStatusCode, result.Data);
+            return StatusCode(StatusCodes.Status201Created, result);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
 
             _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(PutExcercise)} - Finished, " +
                  $"{nameof(ExcerciseRequest)}: {JsonConvert.SerializeObject(request)}");
-            return StatusCode(result.HttpStatusCode, result.Data);
+            return StatusCode(StatusCodes.Status200OK, result);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
 
             _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(DeleteExcercise)} - Finished, " +
                 $"{nameof(id)}: {id}");
-            return StatusCode(result.HttpStatusCode, result.Data);
+            return StatusCode(StatusCodes.Status200OK, result);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
             var result = _excerciseService.GetExcerciseTypes();
 
             _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(GetExerciseTypes)} - Finished");
-            return StatusCode(result.HttpStatusCode, result.Data);
+            return StatusCode(StatusCodes.Status200OK, result);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
             var result = await _excerciseService.PostExcerciseTypeIcon(id, formFile);
 
             _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(PostExcerciseTypeIcon)} - Finished");
-            return StatusCode(result.HttpStatusCode, result.Data);
+            return StatusCode(StatusCodes.Status201Created, result);
         }
 
         /// <summary>
