@@ -2,6 +2,7 @@ using AutoMapper;
 using Rodrigo.Tech.Model.Request.V1;
 using Rodrigo.Tech.Model.Response.V1;
 using Rodrigo.Tech.Repository.Tables.Context;
+using System.IO;
 
 namespace Rodrigo.Tech.Model.AutoMapper
 {
@@ -15,13 +16,17 @@ namespace Rodrigo.Tech.Model.AutoMapper
 
         private void FileMap()
         {
-            CreateMap<File, FileResponse>();
+            //CreateMap<File, FileResponse>();
         }
 
         private void ExcerciseMap()
         {
             CreateMap<ExcerciseRequest, Excercise>();
             CreateMap<Excercise, ExcerciseResponse>();
+
+            CreateMap<ExcerciseTypeIcon, ExcerciseTypeIconResponse>()
+                .ForMember(x => x.Stream, opt =>
+                    opt.MapFrom(src => new MemoryStream(src.Icon)));
         }
     }
 }

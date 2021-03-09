@@ -52,11 +52,33 @@ namespace Rodrigo.Tech.Service.Interface.V1
         IDictionary<string, int> GetExcerciseTypes();
 
         /// <summary>
+        ///     Gets ExcerciseType Icon image
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<ExcerciseTypeIconResponse> GetExcerciseTypeIcon(ExcerciseTypeEnum id);
+
+        /// <summary>
         ///     Assigns Icon to Excercise type
         /// </summary>
         /// <param name="id"></param>
         /// <param name="formFile"></param>
         /// <returns></returns>
-        Task<object> PostExcerciseTypeIcon(ExcerciseTypeEnum id, IFormFile formFile);
+        Task<ExcerciseTypeIconResponse> PostExcerciseTypeIcon(ExcerciseTypeEnum id, IFormFile formFile);
+
+        /// <summary>
+        ///     Updates ExerciseType Icon image
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="formFile"></param>
+        /// <returns></returns>
+        Task<ExcerciseTypeIconResponse> PutExcerciseTypeIcon(ExcerciseTypeEnum id, IFormFile formFile);
+
+        /// <summary>
+        ///     Deletes ExerciseType Icon image
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<bool> DeleteExcerciseTypeIcon(ExcerciseTypeEnum id);
     }
 }

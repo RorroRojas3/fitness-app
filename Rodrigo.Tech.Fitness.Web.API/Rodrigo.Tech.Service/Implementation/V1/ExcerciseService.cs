@@ -23,18 +23,20 @@ namespace Rodrigo.Tech.Service.Implementation.V1
         private readonly ILogger _logger;
         private readonly IMapper _mapper;
         private readonly IRepository<Excercise> _excerciseRepository;
-        private readonly IRepository<ExcerciseTypeMapping> _exerciseTypeMappingRepository;
+        private readonly IRepository<ExcerciseTypeIcon> _exerciseTypeIconRepository;
 
         public ExcerciseService(ILogger<ExcerciseService> logger,
                                 IMapper mapper,
-                                IRepository<Excercise> excerciseRepository)
+                                IRepository<Excercise> excerciseRepository, 
+                                IRepository<ExcerciseTypeIcon> excerciseTypeIconRepository)
         {
             _logger = logger;
             _mapper = mapper;
             _excerciseRepository = excerciseRepository;
-
+            _exerciseTypeIconRepository = excerciseTypeIconRepository;
         }
 
+        #region Excercise
         /// <inheritdoc/>
         public async Task<bool> DeleteExcercise(Guid id)
         {
@@ -143,7 +145,9 @@ namespace Rodrigo.Tech.Service.Implementation.V1
                 $"{nameof(ExcerciseRequest)}: {JsonConvert.SerializeObject(request)}");
             return _mapper.Map<ExcerciseResponse>(excercise); ;
         }
+        #endregion
 
+        #region Exercise Types
         /// <inheritdoc/>
         public IDictionary<string, int> GetExcerciseTypes()
         {
@@ -156,16 +160,39 @@ namespace Rodrigo.Tech.Service.Implementation.V1
             _logger.LogInformation($"{nameof(ExcerciseService)} - {nameof(GetExcerciseTypes)} - Finished");
             return excerciseTypes;
         }
+        #endregion
+
+        #region Excercise Type Icons
+        /// <inheritdoc/>
+        public async Task<ExcerciseTypeIconResponse> GetExcerciseTypeIcon(ExcerciseTypeEnum id)
+        {
+            _logger.LogInformation($"{nameof(ExcerciseService)} - {nameof(GetExcerciseTypeIcon)} - Started, " +
+                $"{nameof(id)}: {id}");
+
+            var excerciseTypeIcon = await _exerciseTypeIconRepository.GetWithExpression(x => x.ExcerciseTypeId == (int)id);
+
+            if (excerciseTypeIcon == null)
+            {
+                _logger.LogInformation($"{nameof(ExcerciseService)} - {nameof(GetExcerciseTypeIcon)} - " +
+                    $"{nameof(excerciseTypeIcon)} not found, " +
+                    $"{nameof(id)}: {id}");
+                throw new StatusCodeException(HttpStatusCode.NotFound, $"{nameof(excerciseTypeIcon)} not found");
+            }
+
+            _logger.LogInformation($"{nameof(ExcerciseService)} - {nameof(GetExcerciseTypeIcon)} - Finished, " +
+                $"{nameof(id)}: {id}");
+            return _mapper.Map<ExcerciseTypeIconResponse>(excerciseTypeIcon);   
+        }
 
         /// <inheritdoc/>
-        public async Task<object> PostExcerciseTypeIcon(ExcerciseTypeEnum id, IFormFile formFile)
+        public async Task<ExcerciseTypeIconResponse> PostExcerciseTypeIcon(ExcerciseTypeEnum id, IFormFile formFile)
         {
             _logger.LogInformation($"{nameof(ExcerciseService)} - {nameof(PostExcerciseTypeIcon)} - Started, " +
                 $"{nameof(id)}: {id}");
 
-            var excerciseTypeIcon = _exerciseTypeMappingRepository.GetWithExpression(x => x.ExcerciseTypeId == (int)id);
+            var excerciseTypeIcon = await _exerciseTypeIconRepository.GetWithExpression(x => x.ExcerciseTypeId == (int)id);
 
-            if (excerciseTypeIcon == null)
+            if (excerciseTypeIcon != null)
             {
                 _logger.LogError($"{nameof(ExcerciseService)} - {nameof(PostExcerciseTypeIcon)} - {excerciseTypeIcon} not found, " +
                     $"{nameof(id)}: {id}");
@@ -174,12 +201,70 @@ namespace Rodrigo.Tech.Service.Implementation.V1
 
             MemoryStream memoryStream = new MemoryStream();
             await formFile.CopyToAsync(memoryStream);
-            var excerciseTypeMapping = new ExcerciseTypeMapping() { ExcerciseTypeId = (int)id, Icon = memoryStream.ToArray() };
-            await _exerciseTypeMappingRepository.Add(excerciseTypeMapping);
+            var newExcerciseTypeIcon = new ExcerciseTypeIcon() 
+            { 
+                ExcerciseTypeId = (int)id, 
+                Icon = memoryStream.ToArray(),
+                Name = formFile.FileName,
+                ContentType = formFile.ContentType
+            };
+            await _exerciseTypeIconRepository.Add(newExcerciseTypeIcon);
 
             _logger.LogInformation($"{nameof(ExcerciseService)} - {nameof(PostExcerciseTypeIcon)} - Finished, " +
                 $"{nameof(id)}: {id}");
+            return _mapper.Map<ExcerciseTypeIconResponse>(newExcerciseTypeIcon);
+        }
+
+        /// <inheritdoc/>
+        public async Task<ExcerciseTypeIconResponse> PutExcerciseTypeIcon(ExcerciseTypeEnum id, IFormFile formFile)
+        {
+            _logger.LogInformation($"{nameof(ExcerciseService)} - {nameof(PutExcerciseTypeIcon)} - Started, " +
+                $"{nameof(id)}: {id}");
+
+            var excerciseTypeIcon = await _exerciseTypeIconRepository.GetWithExpression(x => x.ExcerciseTypeId == (int)id);
+
+            if (excerciseTypeIcon == null)
+            {
+                _logger.LogError($"{nameof(ExcerciseService)} - {nameof(PutExcerciseTypeIcon)} - " +
+                    $"{nameof(excerciseTypeIcon)} not found, " +
+                    $"{nameof(id)}: {id}");
+                throw new StatusCodeException(HttpStatusCode.NotFound, $"{nameof(excerciseTypeIcon)} not found");
+            }
+
+            MemoryStream memoryStream = new MemoryStream();
+            await formFile.CopyToAsync(memoryStream);
+            excerciseTypeIcon.Icon = memoryStream.ToArray();
+            excerciseTypeIcon.Name = formFile.FileName;
+            excerciseTypeIcon.ContentType = formFile.ContentType;
+            await _exerciseTypeIconRepository.Update(excerciseTypeIcon);
+
+            _logger.LogInformation($"{nameof(ExcerciseService)} - {nameof(PutExcerciseTypeIcon)} - Finished, " +
+                $"{nameof(id)}: {id}");
+            return _mapper.Map<ExcerciseTypeIconResponse>(excerciseTypeIcon);
+        }
+
+        /// <inheritdoc/>
+        public async Task<bool> DeleteExcerciseTypeIcon(ExcerciseTypeEnum id)
+        {
+            _logger.LogInformation($"{nameof(ExcerciseService)} - {nameof(DeleteExcerciseTypeIcon)} - Started, " +
+                $"{nameof(id)}: {id}");
+
+            var excerciseTypeIcon = await _exerciseTypeIconRepository.GetWithExpression(x => x.ExcerciseTypeId == (int)id);
+
+            if (excerciseTypeIcon == null)
+            {
+                _logger.LogError($"{nameof(ExcerciseService)} - {nameof(DeleteExcerciseTypeIcon)} - " +
+                    $"{nameof(excerciseTypeIcon)} not found, " +
+                    $"{nameof(id)}: {id}");
+                throw new StatusCodeException(HttpStatusCode.NotFound, $"{nameof(excerciseTypeIcon)} not found");
+            }
+
+            await _exerciseTypeIconRepository.Delete(excerciseTypeIcon.Id);
+
+            _logger.LogInformation($"{nameof(ExcerciseService)} - {nameof(DeleteExcerciseTypeIcon)} - Finished, " +
+                $"{nameof(id)}: {id}");
             return true;
         }
+        #endregion
     }
 }

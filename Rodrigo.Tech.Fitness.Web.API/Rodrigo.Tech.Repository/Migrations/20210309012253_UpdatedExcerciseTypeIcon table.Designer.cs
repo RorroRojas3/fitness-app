@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rodrigo.Tech.Respository.Context;
 
 namespace Rodrigo.Tech.Repository.Migrations
 {
     [DbContext(typeof(FitnessDatabase))]
-    partial class FitnessDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20210309012253_UpdatedExcerciseTypeIcon table")]
+    partial class UpdatedExcerciseTypeIcontable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

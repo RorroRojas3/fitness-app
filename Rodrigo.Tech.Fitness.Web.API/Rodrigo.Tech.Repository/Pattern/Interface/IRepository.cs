@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Rodrigo.Tech.Repository.Pattern.Interface
@@ -24,14 +25,14 @@ namespace Rodrigo.Tech.Repository.Pattern.Interface
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        T GetWithExpression(Func<T, bool> predicate);
+        Task<T> GetWithExpression(Expression<Func<T, bool>> predicate);
 
         /// <summary>
         ///     Gets list of T with LINQ expression
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        List<T> GetAllWithExpression(Func<T, bool> predicate);
+        Task<IList<T>> GetAllWithExpression(Expression<Func<T, bool>> predicate);
 
         /// <summary>
         ///     Adds T to DB

@@ -1,16 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Rodrigo.Tech.Model.Enums.V1;
-using Rodrigo.Tech.Model.Exceptions;
 using Rodrigo.Tech.Model.Request.V1;
 using Rodrigo.Tech.Model.Response.V1;
 using Rodrigo.Tech.Service.Interface.V1;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
@@ -180,9 +177,14 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
             _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(GetExcerciseTypeIcon)} - Started, " +
                 $"{nameof(id)}: {id}");
 
+            var result = await _excerciseService.GetExcerciseTypeIcon(id);
+
             _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(GetExcerciseTypeIcon)} - Finished, " +
                 $"{nameof(id)}: {id}");
-            return null;
+            return new FileStreamResult(result.Stream, "application/octet-stream")
+            {
+                FileDownloadName = result.Name,
+            };
         }
 
         /// <summary>
@@ -199,25 +201,28 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
             var result = await _excerciseService.PostExcerciseTypeIcon(id, formFile);
 
             _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(PostExcerciseTypeIcon)} - Finished");
-            return StatusCode(StatusCodes.Status201Created, result);
+            return StatusCode(StatusCodes.Status201Created);
         }
 
         /// <summary>
         ///     Updates icon for an excercise type
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="formFile"></param>
         /// <returns></returns>
         [HttpPut]
         [Route("Types/Icons/{id}")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        public async Task<IActionResult> PutExcerciseTypeIcon(ExcerciseTypeEnum id)
+        public async Task<IActionResult> PutExcerciseTypeIcon(ExcerciseTypeEnum id, IFormFile formFile)
         {
             _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(PutExcerciseTypeIcon)} - Started, " +
                 $"{nameof(id)}: {id}");
 
+            var result = await _excerciseService.PutExcerciseTypeIcon(id, formFile);
+
             _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(PutExcerciseTypeIcon)} - Finished, " +
                 $"{nameof(id)}: {id}");
-            return null;
+            return StatusCode(StatusCodes.Status200OK);
         }
 
         /// <summary>
@@ -233,9 +238,11 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
             _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(DeleteExcerciseTypeIcon)} - Started, " +
                 $"{nameof(id)}: {id}");
 
+            var result = await _excerciseService.DeleteExcerciseTypeIcon(id);
+
             _logger.LogInformation($"{nameof(ExcerciseController)} - {nameof(DeleteExcerciseTypeIcon)} - Finished, " +
                 $"{nameof(id)}: {id}");
-            return null;
+            return StatusCode(StatusCodes.Status200OK, result);
         }
     }
 }

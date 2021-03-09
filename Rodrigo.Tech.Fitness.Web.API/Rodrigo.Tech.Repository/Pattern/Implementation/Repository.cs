@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Rodrigo.Tech.Respository.Context;
 using Rodrigo.Tech.Repository.Pattern.Interface;
+using System.Linq.Expressions;
 
 namespace Rodrigo.Tech.Repository.Pattern.Implementation
 {
@@ -62,15 +63,15 @@ namespace Rodrigo.Tech.Repository.Pattern.Implementation
         }
 
         /// <inheritdoc/>
-        public T GetWithExpression(Func<T, bool> predicate)
+        public async Task<T> GetWithExpression(Expression<Func<T, bool>> predicate)
         {
-            return _entities.Where(predicate).FirstOrDefault();
+            return await _entities.Where(predicate).FirstOrDefaultAsync();
         }
 
         /// <inheritdoc/>
-        public List<T> GetAllWithExpression(Func<T, bool> predicate)
+        public async Task<IList<T>> GetAllWithExpression(Expression<Func<T, bool>> predicate)
         {
-            return _entities.Where(predicate).ToList();
+            return await _entities.Where(predicate).ToListAsync();
         }
 
         /// <inheritdoc/>
