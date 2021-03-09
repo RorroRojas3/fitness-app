@@ -20,22 +20,29 @@ namespace Rodrigo.Tech.Fitness.Web.API.Extensions.ServiceCollection
         {
             var tenantId = Environment.GetEnvironmentVariable(EnvironmentConstants.TENANT_ID);
             var clientId = Environment.GetEnvironmentVariable(EnvironmentConstants.CLIENT_ID);
+            var microsoftClientId = Environment.GetEnvironmentVariable(EnvironmentConstants.MICROSOFT_CLIENTID);
+            var microsoftClientSecret = Environment.GetEnvironmentVariable(EnvironmentConstants.MICROSOFT_CLIENTSECRET);
             var azureAd = configuration.GetSection("AzureAd").Get<AzureAd>();
             services.AddAuthentication(sharedOptions =>
             {
                 sharedOptions.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer(options =>
-            {
-                options.Audience = string.Format(azureAd.Audience, clientId);
-                options.Authority = $"{azureAd.Instance}/{tenantId}";
-                options.TokenValidationParameters = new TokenValidationParameters
+                .AddMicrosoftAccount(options =>
                 {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true
-                };
-            });
+                    options.ClientId = microsoftClientId;
+                    options.ClientSecret = microsoftClientSecret;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.Audience = string.Format(azureAd.Audience, clientId);
+                    options.Authority = $"{azureAd.Instance}/{tenantId}";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true
+                    };
+                });
         }
     }
 }

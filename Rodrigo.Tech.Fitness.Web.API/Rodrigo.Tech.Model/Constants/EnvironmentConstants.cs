@@ -15,5 +15,9 @@
         public const string CLIENT_ID = nameof(CLIENT_ID);
 
         public const string TENANT_ID = nameof(TENANT_ID);
+
+        public const string MICROSOFT_CLIENTID = nameof(MICROSOFT_CLIENTID);
+
+        public const string MICROSOFT_CLIENTSECRET = nameof(MICROSOFT_CLIENTSECRET);
     }
 }
