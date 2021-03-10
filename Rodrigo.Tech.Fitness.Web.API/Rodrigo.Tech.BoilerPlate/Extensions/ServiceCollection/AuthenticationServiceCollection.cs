@@ -34,7 +34,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Extensions.ServiceCollection
                 })
                 .AddJwtBearer(options =>
                 {
-                    options.Audience = string.Format(azureAd.Audience, clientId);
+                    options.Audience = string.Format(azureAd.Audience, microsoftClientId);
                     options.Authority = $"{azureAd.Instance}/{tenantId}";
                     options.TokenValidationParameters = new TokenValidationParameters
                     {

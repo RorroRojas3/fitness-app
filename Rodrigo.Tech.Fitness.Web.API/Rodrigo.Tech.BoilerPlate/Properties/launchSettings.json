@@ -14,8 +14,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "APPINSIGHTS_INSTRUMENTATIONKEY": "",
-        "CLIENT_ID": "",
-        "TENANT_ID": "",
+        "TENANT_ID": "common",
         "MICROSOFT_CLIENTID": "",
         "MICROSOFT_CLIENTSECRET": ""
       },
