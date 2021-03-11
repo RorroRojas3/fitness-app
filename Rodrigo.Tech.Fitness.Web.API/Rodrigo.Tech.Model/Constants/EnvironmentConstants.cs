@@ -19,5 +19,9 @@
         public const string MICROSOFT_CLIENTID = nameof(MICROSOFT_CLIENTID);
 
         public const string MICROSOFT_CLIENTSECRET = nameof(MICROSOFT_CLIENTSECRET);
+
+        public const string GOOGLE_CLIENTID = nameof(GOOGLE_CLIENTID);
+
+        public const string GOOGLE_CLIENTSECRET = nameof(GOOGLE_CLIENTSECRET);
     }
 }

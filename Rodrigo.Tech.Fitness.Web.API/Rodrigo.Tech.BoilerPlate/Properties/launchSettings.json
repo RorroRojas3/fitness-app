@@ -16,7 +16,9 @@
         "APPINSIGHTS_INSTRUMENTATIONKEY": "",
         "TENANT_ID": "common",
         "MICROSOFT_CLIENTID": "",
-        "MICROSOFT_CLIENTSECRET": ""
+        "MICROSOFT_CLIENTSECRET": "",
+        "GOOGLE_CLIENTID": "",
+        "GOOGLE_CLIENTSECRET": ""
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
     }
