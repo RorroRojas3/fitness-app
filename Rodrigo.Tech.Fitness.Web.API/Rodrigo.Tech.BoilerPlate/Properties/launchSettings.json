@@ -15,10 +15,10 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "APPINSIGHTS_INSTRUMENTATIONKEY": "",
         "TENANT_ID": "common",
-        "MICROSOFT_CLIENTID": "",
-        "MICROSOFT_CLIENTSECRET": "",
-        "GOOGLE_CLIENTID": "",
-        "GOOGLE_CLIENTSECRET": ""
+        "MICROSOFT_CLIENTID": "123",
+        "MICROSOFT_CLIENTSECRET": "12",
+        "GOOGLE_CLIENTID": "12",
+        "GOOGLE_CLIENTSECRET": "12"
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
     }

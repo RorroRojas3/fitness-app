@@ -29,6 +29,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
         /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
+        [Route("Check")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
         public async Task<IActionResult> PostAuthorizedUser([FromBody] AuthorizedUserRequest request)
@@ -42,7 +43,11 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
         }
 
 
-
+        /// <summary>
+        ///     Creates user in DB
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [Produces("application/json")]
