@@ -1,9 +1,14 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import { GoogleLogin } from "react-google-login";
+import FacebookLogin from "react-facebook-login";
 
 const SignInModal = (props) => {
   const responseGoogle = (response) => {
+    console.log(response);
+  };
+
+  const responseFacebook = (response) => {
     console.log(response);
   };
 
@@ -28,6 +33,14 @@ const SignInModal = (props) => {
             onSuccess={responseGoogle}
             onFailure={responseGoogle}
             cookiePolicy={"single_host_origin"}
+          />
+          <FacebookLogin
+            appId="511969923263248"
+            autoLoad={false}
+            fields="name,email,picture"
+            scope="public_profile,email"
+            callback={responseFacebook}
+            icon="fa-facebook"
           />
         </Modal.Body>
         <Modal.Footer>
