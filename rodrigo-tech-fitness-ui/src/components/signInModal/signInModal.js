@@ -1,7 +1,12 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
+import { GoogleLogin } from "react-google-login";
 
 const SignInModal = (props) => {
+  const responseGoogle = (response) => {
+    console.log(response);
+  };
+
   return (
     <div>
       <Modal
@@ -17,11 +22,13 @@ const SignInModal = (props) => {
         </Modal.Header>
         <Modal.Body>
           <h4>Centered Modal</h4>
-          <p>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros.
-          </p>
+          <GoogleLogin
+            clientId="526890719928-l2hfe3l742eongf9kicdsu973r0jojj3.apps.googleusercontent.com"
+            buttonText="Login with Google"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            cookiePolicy={"single_host_origin"}
+          />
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={props.onHide}>Close</Button>
