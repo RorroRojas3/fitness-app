@@ -27,7 +27,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Extensions.Applications
 
                     options.RoutePrefix = string.Empty;
                     options.OAuthClientId(Environment.GetEnvironmentVariable(EnvironmentConstants.CLIENT_ID));
-                    options.OAuthAppName("ASP.NET Core Web Api");
+                    options.OAuthAppName("Doge Fitness");
                 });
         }
     }

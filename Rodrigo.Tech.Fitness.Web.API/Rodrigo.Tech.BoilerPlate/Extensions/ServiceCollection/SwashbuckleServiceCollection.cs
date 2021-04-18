@@ -59,7 +59,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Extensions.ServiceCollection
                 });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                x.IncludeXmlComments(xmlPath);               
+                x.IncludeXmlComments(xmlPath);
             });
         }
     }
@@ -93,8 +93,8 @@ namespace Rodrigo.Tech.Fitness.Web.API.Extensions.ServiceCollection
                   description.GroupName,
                     new OpenApiInfo()
                     {
-                        Title = $".NET Core Boiler Plate",
-                        Description = $".NET Core Boiler Plate Example",
+                        Title = $"Doge Fitness API",
+                        Description = $"API for Doge Fitness",
                         Version = description.ApiVersion.ToString(),
                     });
             }

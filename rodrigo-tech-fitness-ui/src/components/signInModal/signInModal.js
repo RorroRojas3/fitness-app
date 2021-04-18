@@ -28,14 +28,14 @@ const SignInModal = (props) => {
         <Modal.Body>
           <h4>Centered Modal</h4>
           <GoogleLogin
-            clientId="526890719928-l2hfe3l742eongf9kicdsu973r0jojj3.apps.googleusercontent.com"
+            clientId=""
             buttonText="Login with Google"
             onSuccess={responseGoogle}
             onFailure={responseGoogle}
             cookiePolicy={"single_host_origin"}
           />
           <FacebookLogin
-            appId="511969923263248"
+            appId=""
             autoLoad={false}
             fields="name,email,picture"
             scope="public_profile,email"

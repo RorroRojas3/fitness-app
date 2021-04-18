@@ -19,37 +19,22 @@ namespace Rodrigo.Tech.Fitness.Web.API.Extensions.ServiceCollection
         {
             var tenantId = Environment.GetEnvironmentVariable(EnvironmentConstants.TENANT_ID);
             var clientId = Environment.GetEnvironmentVariable(EnvironmentConstants.CLIENT_ID);
-            var microsoftClientId = Environment.GetEnvironmentVariable(EnvironmentConstants.MICROSOFT_CLIENTID);
-            var microsoftClientSecret = Environment.GetEnvironmentVariable(EnvironmentConstants.MICROSOFT_CLIENTSECRET);
-            var googleClientId = Environment.GetEnvironmentVariable(EnvironmentConstants.GOOGLE_CLIENTID);
-            var googleClientSecret = Environment.GetEnvironmentVariable(EnvironmentConstants.GOOGLE_CLIENTSECRET);
             var azureAd = configuration.GetSection("AzureAd").Get<AzureAd>();
             services.AddAuthentication(sharedOptions =>
             {
                 sharedOptions.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-                .AddMicrosoftAccount(options =>
+            .AddJwtBearer(options =>
+            {
+                options.Audience = string.Format(azureAd.Audience, clientId);
+                options.Authority = $"{azureAd.Instance}/{tenantId}";
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    options.ClientId = microsoftClientId;
-                    options.ClientSecret = microsoftClientSecret;
-                })
-                .AddGoogle(options =>
-                {
-                    options.ClientId = googleClientId;
-                    options.ClientSecret = googleClientSecret;
-                }           
-                )
-                .AddJwtBearer(options =>
-                {
-                    options.Audience = string.Format(azureAd.Audience, microsoftClientId);
-                    options.Authority = $"{azureAd.Instance}/{tenantId}";
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true
-                    };
-                });
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true
+                };
+            });
         }
     }
 }
