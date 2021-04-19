@@ -2,6 +2,9 @@ import MyNavbar from "../src/components/navbar/navbar";
 import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+// My pages
+import Home from "./pages/home/home";
+
 function App() {
   return (
     <div className="App">
@@ -9,7 +12,9 @@ function App() {
       <Router>
         <Container>
           <Switch>
-            <Route exact path="/"></Route>
+            <Route exact path="/">
+              <Home></Home>
+            </Route>
             <Route exact path="/home"></Route>
             <Route exact path="/lifts"></Route>
           </Switch>
