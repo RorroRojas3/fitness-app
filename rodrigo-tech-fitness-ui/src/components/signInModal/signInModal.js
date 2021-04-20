@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Grid, Row, Col } from "react-bootstrap";
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 
@@ -20,30 +20,36 @@ const SignInModal = (props) => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Modal heading
+        <Modal.Header>
+          <Modal.Title
+            className="w-100 text-center"
+            id="contained-modal-title-vcenter"
+          >
+            Please Login
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Centered Modal</h4>
-          <GoogleLogin
-            clientId=""
-            buttonText="Login with Google"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-            cookiePolicy={"single_host_origin"}
-          />
-          <FacebookLogin
-            appId=""
-            autoLoad={false}
-            fields="name,email,picture"
-            scope="public_profile,email"
-            callback={responseFacebook}
-            icon="fa-facebook"
-          />
+          <Row className="justify-content-center">
+            <GoogleLogin
+              clientId=""
+              buttonText="Login with Google"
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy={"single_host_origin"}
+            />
+          </Row>
+          <Row className="justify-content-center mt-2">
+            <FacebookLogin
+              appId=""
+              autoLoad={false}
+              fields="name,email,picture"
+              scope="public_profile,email"
+              callback={responseFacebook}
+              icon="fa-facebook"
+            />
+          </Row>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="justify-content-center">
           <Button onClick={props.onHide}>Close</Button>
         </Modal.Footer>
       </Modal>
