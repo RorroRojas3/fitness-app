@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Google.Apis.Auth;
 using Microsoft.Extensions.Logging;
@@ -18,6 +19,8 @@ namespace Rodrigo.Tech.Service.Implementation.V1
             _logger = logger;
         }
 
+        #region  User Creation
+        /// <inheritdoc/>
         public async Task<AuthorizedUserResponse> PostAuhthorizedUser(AuthorizedUserRequest request)
         {
             _logger.LogInformation($"{nameof(UserService)} - {nameof(PostAuhthorizedUser)} -" +
@@ -44,5 +47,19 @@ namespace Rodrigo.Tech.Service.Implementation.V1
 
             return null;
         }
+        #endregion
+
+        #region User Excercises
+        /// <inheritdoc/>
+        public async Task<IList<object>> GetUserExcercises()
+        {
+            _logger.LogInformation($"{nameof(UserService)} - {nameof(GetUserExcercises)} - Started");
+
+            await Task.CompletedTask;
+
+            _logger.LogInformation($"{nameof(UserService)} - {nameof(GetUserExcercises)} - Finished");
+            return null;
+        }
+        #endregion
     }
 }

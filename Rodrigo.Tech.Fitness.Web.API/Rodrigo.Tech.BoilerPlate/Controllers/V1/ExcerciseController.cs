@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -80,6 +81,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
         ///
         /// </remarks>
         /// <returns></returns>
+        [Authorize]
         [HttpPost]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ExcerciseResponse), StatusCodes.Status201Created)]
@@ -111,6 +113,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
         ///
         /// </remarks>
         /// <returns></returns>
+        [Authorize]
         [HttpPut]
         [Route("{id}")]
         [Produces("application/json")]
@@ -132,6 +135,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpDelete]
         [Route("{id}")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
