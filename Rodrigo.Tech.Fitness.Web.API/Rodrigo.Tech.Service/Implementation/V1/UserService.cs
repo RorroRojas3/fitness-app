@@ -11,6 +11,8 @@ using Rodrigo.Tech.Model.Enums.V1;
 using Rodrigo.Tech.Model.Exceptions;
 using Rodrigo.Tech.Model.Request.V1;
 using Rodrigo.Tech.Model.Response.V1;
+using Rodrigo.Tech.Repository.Pattern.Interface;
+using Rodrigo.Tech.Repository.Tables.Context;
 using Rodrigo.Tech.Service.Interface.V1;
 
 namespace Rodrigo.Tech.Service.Implementation.V1
@@ -19,12 +21,15 @@ namespace Rodrigo.Tech.Service.Implementation.V1
     {
         private readonly ILogger _logger;
         private readonly IMapper _mapper;
+        private readonly IRepository<User> _userRepository;
 
         public UserService(ILogger<UserService> logger,
-                            IMapper mapper)
+                            IMapper mapper,
+                            IRepository<User> userRepository)
         {
             _logger = logger;
             _mapper = mapper;
+            _userRepository = userRepository;
         }
 
         #region  User Creation
@@ -49,12 +54,23 @@ namespace Rodrigo.Tech.Service.Implementation.V1
                     break;
             }
 
+            var user = await _userRepository.GetWithExpression(x => x.Email.Equals(userResponse.Email));
+            if (user == null)
+            {
+                var newUser = _mapper.Map<User>(userResponse);
+                await _userRepository.Add(newUser);
+                user = newUser;
+            }
+
+            var authorizedUserResponse = _mapper.Map<AuthorizedUserResponse>(user);
+            authorizedUserResponse.JWTToken = CreateJWTToken(user);
+
 
             _logger.LogInformation($"{nameof(UserService)} - {nameof(PostAuthorizedUser)} -" +
                 $"Finished, " +
                 $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");
 
-            return null;
+            return authorizedUserResponse;
         }
 
         /// <summary>
@@ -75,6 +91,11 @@ namespace Rodrigo.Tech.Service.Implementation.V1
             }
 
             return _mapper.Map<UserResponse>(payload);
+        }
+
+        private string CreateJWTToken(User user)
+        {
+            return user.Email;
         }
         #endregion
 

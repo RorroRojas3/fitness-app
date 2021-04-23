@@ -34,12 +34,12 @@ namespace Rodrigo.Tech.Model.AutoMapper
         private void UserMap()
         {
             CreateMap<GoogleJsonWebSignature.Payload, UserResponse>()
-                .ForMember(dst => dst.Email, opt =>
-                    opt.MapFrom(src => src.Email))
                 .ForMember(dst => dst.FirstName, opt =>
                     opt.MapFrom(src => src.GivenName))
                 .ForMember(dst => dst.LastName, opt =>
                     opt.MapFrom(dst => dst.FamilyName));
+            CreateMap<UserResponse, User>();
+            CreateMap<User, AuthorizedUserResponse>();
         }
     }
 }

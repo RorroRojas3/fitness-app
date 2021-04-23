@@ -40,7 +40,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
         ///        "emailAddress": "string"
         ///     }
         ///
-        /// <remarks>
+        /// </remarks>
         /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
