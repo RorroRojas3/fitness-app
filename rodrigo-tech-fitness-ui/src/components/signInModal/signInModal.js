@@ -31,7 +31,7 @@ const SignInModal = (props) => {
         <Modal.Body>
           <Row className="justify-content-center">
             <GoogleLogin
-              clientId=""
+              clientId="526890719928-l2hfe3l742eongf9kicdsu973r0jojj3.apps.googleusercontent.com"
               buttonText="Login with Google"
               onSuccess={responseGoogle}
               onFailure={responseGoogle}

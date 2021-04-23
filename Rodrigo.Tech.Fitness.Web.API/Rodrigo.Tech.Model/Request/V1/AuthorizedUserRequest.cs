@@ -10,9 +10,5 @@ namespace Rodrigo.Tech.Model.Request.V1
 
         [Required]
         public string AccessToken { get; set; }
-
-        [Required]
-        [EmailAddress]
-        public string EmailAddress { get; set; }
     }
 }
