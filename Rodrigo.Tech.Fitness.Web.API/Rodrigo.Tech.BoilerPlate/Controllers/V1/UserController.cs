@@ -29,6 +29,9 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
 
         /// <summary>
         ///      Checks if user is registered 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <remarks>
         /// Sample request:
         ///
         ///     {
@@ -37,8 +40,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
         ///        "emailAddress": "string"
         ///     }
         ///
-        /// </summary>
-        /// <param name="request"></param>
+        /// <remarks>
         /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
@@ -48,7 +50,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Controllers.V1
         {
             _logger.LogInformation($"{nameof(UserController)} - {nameof(PostAuthorizedUser)} - Started");
 
-            var authorizedUser = await _userService.PostAuhthorizedUser(request);
+            var authorizedUser = await _userService.PostAuthorizedUser(request);
 
             _logger.LogInformation($"{nameof(UserController)} - {nameof(PostAuthorizedUser)} - Finished");
             return StatusCode(StatusCodes.Status200OK, authorizedUser);

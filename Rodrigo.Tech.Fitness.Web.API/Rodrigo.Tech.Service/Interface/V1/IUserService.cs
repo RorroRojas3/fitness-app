@@ -14,7 +14,7 @@ namespace Rodrigo.Tech.Service.Interface.V1
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<AuthorizedUserResponse> PostAuhthorizedUser(AuthorizedUserRequest request);
+        Task<AuthorizedUserResponse> PostAuthorizedUser(AuthorizedUserRequest request);
 
         /// <summary>
         ///     Gets the user weekly excercies

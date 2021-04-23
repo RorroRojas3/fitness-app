@@ -30,6 +30,8 @@ namespace Rodrigo.Tech.Respository.Context
         public virtual DbSet<Excercise> Excercises { get; set; }
 
         public virtual DbSet<ExcerciseTypeIcon> ExcerciseTypeMappings { get; set; }
+
+        public virtual DbSet<User> Users { get; set; }
         #endregion
     }
 }
