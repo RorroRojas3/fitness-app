@@ -23,13 +23,17 @@ namespace Rodrigo.Tech.Service.Implementation.V1
         private readonly IMapper _mapper;
         private readonly IRepository<User> _userRepository;
 
+        private readonly ITokenService _tokenService;
+
         public UserService(ILogger<UserService> logger,
                             IMapper mapper,
-                            IRepository<User> userRepository)
+                            IRepository<User> userRepository,
+                            ITokenService tokenService)
         {
             _logger = logger;
             _mapper = mapper;
             _userRepository = userRepository;
+            _tokenService = tokenService;
         }
 
         #region  User Creation
@@ -63,8 +67,7 @@ namespace Rodrigo.Tech.Service.Implementation.V1
             }
 
             var authorizedUserResponse = _mapper.Map<AuthorizedUserResponse>(user);
-            authorizedUserResponse.JWTToken = CreateJWTToken(user);
-
+            authorizedUserResponse.JWTToken = _tokenService.CreateJWTToken(user);
 
             _logger.LogInformation($"{nameof(UserService)} - {nameof(PostAuthorizedUser)} -" +
                 $"Finished, " +
@@ -91,11 +94,6 @@ namespace Rodrigo.Tech.Service.Implementation.V1
             }
 
             return _mapper.Map<UserResponse>(payload);
-        }
-
-        private string CreateJWTToken(User user)
-        {
-            return user.Email;
         }
         #endregion
 

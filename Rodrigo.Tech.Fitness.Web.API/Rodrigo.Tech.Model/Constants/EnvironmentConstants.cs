@@ -23,5 +23,9 @@
         public const string GOOGLE_CLIENTID = nameof(GOOGLE_CLIENTID);
 
         public const string GOOGLE_CLIENTSECRET = nameof(GOOGLE_CLIENTSECRET);
+
+        public const string JWT_CLIENTID = nameof(JWT_CLIENTID);
+
+        public const string JWT_SECRET = nameof(JWT_SECRET);
     }
 }

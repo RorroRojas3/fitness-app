@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Rodrigo.Tech.Model.Request.V1;
 using Rodrigo.Tech.Model.Response.V1;
+using Rodrigo.Tech.Repository.Tables.Context;
 
 namespace Rodrigo.Tech.Service.Interface.V1
 {
