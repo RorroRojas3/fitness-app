@@ -61,6 +61,9 @@ namespace Rodrigo.Tech.Service.Implementation.V1
             var user = await _userRepository.GetWithExpression(x => x.Email.Equals(userResponse.Email));
             if (user == null)
             {
+                _logger.LogInformation($"{nameof(UserService)} - {nameof(PostAuthorizedUser)} -" +
+                    $"{nameof(user)} not found, creating user, " +
+                    $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");
                 var newUser = _mapper.Map<User>(userResponse);
                 await _userRepository.Add(newUser);
                 user = newUser;
@@ -72,7 +75,6 @@ namespace Rodrigo.Tech.Service.Implementation.V1
             _logger.LogInformation($"{nameof(UserService)} - {nameof(PostAuthorizedUser)} -" +
                 $"Finished, " +
                 $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");
-
             return authorizedUserResponse;
         }
 
