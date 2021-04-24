@@ -16,6 +16,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Extensions.ServiceCollection
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IExcerciseService, ExcerciseService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITokenService, TokenService>();
         }
     }
 }
