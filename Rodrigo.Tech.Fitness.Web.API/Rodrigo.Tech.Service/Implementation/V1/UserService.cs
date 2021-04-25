@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
 using Google.Apis.Auth;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Rodrigo.Tech.Model.Constants;
@@ -11,8 +13,10 @@ using Rodrigo.Tech.Model.Enums.V1;
 using Rodrigo.Tech.Model.Exceptions;
 using Rodrigo.Tech.Model.Request.V1;
 using Rodrigo.Tech.Model.Response.V1;
+using Rodrigo.Tech.Model.Settings;
 using Rodrigo.Tech.Repository.Pattern.Interface;
 using Rodrigo.Tech.Repository.Tables.Context;
+using Rodrigo.Tech.Service.Interface.Common;
 using Rodrigo.Tech.Service.Interface.V1;
 
 namespace Rodrigo.Tech.Service.Implementation.V1
@@ -21,19 +25,29 @@ namespace Rodrigo.Tech.Service.Implementation.V1
     {
         private readonly ILogger _logger;
         private readonly IMapper _mapper;
+
+        private readonly IConfiguration _configuration;
+
         private readonly IRepository<User> _userRepository;
 
         private readonly ITokenService _tokenService;
 
+        private readonly IHttpClientService _httpClientService;
+
         public UserService(ILogger<UserService> logger,
                             IMapper mapper,
+                            IConfiguration configuration,
                             IRepository<User> userRepository,
-                            ITokenService tokenService)
+                            ITokenService tokenService,
+                            IHttpClientService httpClientService
+                            )
         {
             _logger = logger;
             _mapper = mapper;
+            _configuration = configuration;
             _userRepository = userRepository;
             _tokenService = tokenService;
+            _httpClientService = httpClientService;
         }
 
         #region  User Creation
@@ -53,6 +67,7 @@ namespace Rodrigo.Tech.Service.Implementation.V1
                     userResponse = await GetGoogleUser(request);
                     break;
                 case LogInTypeEnum.FACEBOOK:
+                    userResponse = await GetFacebookUser(request);
                     break;
                 default:
                     break;
@@ -76,6 +91,82 @@ namespace Rodrigo.Tech.Service.Implementation.V1
                 $"Finished, " +
                 $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");
             return authorizedUserResponse;
+        }
+
+        /// <summary>
+        ///     Validates access token and obtains user information
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        private async Task<UserResponse> GetFacebookUser(AuthorizedUserRequest request)
+        {
+            _logger.LogInformation($"{nameof(UserService)} - {nameof(GetFacebookUser)} - Started, " +
+                $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");
+
+            var facebookConfig = _configuration.GetSection(ConfigurationConstants.Facebook).Get<Facebook>();
+            var url = $"{facebookConfig.BaseUrl}/{facebookConfig.ValidateToken}";
+            url = string.Format(url, request.AccessToken, request.AccessToken);
+
+            _logger.LogInformation($"{nameof(UserService)} - {nameof(GetFacebookUser)} - " +
+                $"Calling {url}, " +
+                $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");
+            var response = await _httpClientService.Json(url, HttpMethod.Get);
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError($"{nameof(UserService)} - {nameof(GetFacebookUser)} - " +
+                    $"Unsuccesfull call to {url}, " +
+                    $"{nameof(response.StatusCode)}: {response.StatusCode}, " +
+                    $"{nameof(responseContent)}: {responseContent}, " +
+                    $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");
+                throw new StatusCodeException(HttpStatusCode.Forbidden, $"Invalid {nameof(request.AccessToken)}");
+            }
+
+            var fbValidTokenResponse = JsonConvert.DeserializeObject<FacebookValidateTokenResponse>(responseContent);
+
+            if (!fbValidTokenResponse.Data.IsValid)
+            {
+                _logger.LogError($"{nameof(UserService)} - {nameof(GetFacebookUser)} - " +
+                    $"Facebook {nameof(request.AccessToken)} not valid, " +
+                    $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");
+                throw new StatusCodeException(HttpStatusCode.Forbidden, $"{nameof(request.AccessToken)} not valid");
+            }
+
+            if (!fbValidTokenResponse.Data.AppId.Equals(Environment.GetEnvironmentVariable(EnvironmentConstants.FACEBOOK_CLIENTID)))
+            {
+                _logger.LogError($"{nameof(UserService)} - {nameof(GetFacebookUser)} - " +
+                    $"Facebook {nameof(fbValidTokenResponse.Data.AppId)} not valid, " +
+                    $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");
+                throw new StatusCodeException(HttpStatusCode.Forbidden, $"{nameof(fbValidTokenResponse.Data.AppId)} not valid");
+            }
+
+            url = $"{facebookConfig.BaseUrl}/{facebookConfig.UserInformation}";
+            url = string.Format(url, fbValidTokenResponse.Data.UserId, request.AccessToken);
+
+            _logger.LogInformation($"{nameof(UserService)} - {nameof(GetFacebookUser)} - " +
+                $"Calling {url}, " +
+                $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");
+            response = await _httpClientService.Json(url, HttpMethod.Get);
+
+            responseContent = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError($"{nameof(UserService)} - {nameof(GetFacebookUser)} - " +
+                    $"Unsuccesfull call to {url}, " +
+                    $"{nameof(response.StatusCode)}: {response.StatusCode}, " +
+                    $"{nameof(responseContent)}: {responseContent}, " +
+                    $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");
+                throw new StatusCodeException(HttpStatusCode.BadRequest, $"Could not obtain user's infomation from Facebook");
+            }
+
+            var fbUserInfo = JsonConvert.DeserializeObject<FacebookUserInformationResponse>(responseContent);
+
+            _logger.LogInformation($"{nameof(UserService)} - {nameof(GetFacebookUser)} - Finished, " +
+                $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");
+            return _mapper.Map<UserResponse>(fbUserInfo);
         }
 
         /// <summary>

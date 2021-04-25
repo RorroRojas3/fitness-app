@@ -18,7 +18,7 @@ namespace Rodrigo.Tech.Service.Implementation.Common
         }
 
         /// <inheritdoc/>
-        public async Task<HttpResponseMessage> Json<T>(string url, string httpMethod, Dictionary<string, string> headers = null, T body = default)
+        public async Task<HttpResponseMessage> Json(string url, HttpMethod httpMethod, Dictionary<string, string> headers = null, object body = null)
         {
             _logger.LogInformation($"{nameof(HttpClientService)} - {nameof(Json)} - Started, " +
                 $"{nameof(url)}: {url}, " +
@@ -35,7 +35,7 @@ namespace Rodrigo.Tech.Service.Implementation.Common
                 }
             }
 
-            switch (httpMethod.ToUpper())
+            switch (httpMethod.ToString().ToUpper())
             {
                 case "GET":
                     httpResponseMessage = await client.GetAsync(url);

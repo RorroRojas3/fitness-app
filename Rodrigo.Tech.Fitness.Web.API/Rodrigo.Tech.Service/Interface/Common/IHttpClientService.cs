@@ -15,6 +15,6 @@ namespace Rodrigo.Tech.Service.Interface.Common
         /// <param name="body"></param>
         /// <param name="headers"></param>
         /// <returns></returns>
-        Task<HttpResponseMessage> Json<T>(string url, string httpMethod, Dictionary<string, string> headers = null, T body = default);
+        Task<HttpResponseMessage> Json(string url, HttpMethod httpMethod, Dictionary<string, string> headers = null, object body = null);
     }
 }

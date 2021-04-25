@@ -40,6 +40,9 @@ namespace Rodrigo.Tech.Model.AutoMapper
                     opt.MapFrom(dst => dst.FamilyName));
             CreateMap<UserResponse, User>();
             CreateMap<User, AuthorizedUserResponse>();
+            CreateMap<FacebookUserInformationResponse, UserResponse>()
+                .ForMember(dst => dst.Picture, opt =>
+                    opt.MapFrom(src => src.Picture.Data.Url));
         }
     }
 }

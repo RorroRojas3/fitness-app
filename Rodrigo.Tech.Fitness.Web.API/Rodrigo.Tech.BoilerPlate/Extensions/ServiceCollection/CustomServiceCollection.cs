@@ -1,6 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Rodrigo.Tech.Service.Implementation;
+using Rodrigo.Tech.Service.Implementation.Common;
 using Rodrigo.Tech.Service.Implementation.V1;
+using Rodrigo.Tech.Service.Interface.Common;
 using Rodrigo.Tech.Service.Interface.V1;
 
 namespace Rodrigo.Tech.Fitness.Web.API.Extensions.ServiceCollection
@@ -17,6 +19,7 @@ namespace Rodrigo.Tech.Fitness.Web.API.Extensions.ServiceCollection
             services.AddScoped<IExcerciseService, ExcerciseService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IHttpClientService, HttpClientService>();
         }
     }
 }

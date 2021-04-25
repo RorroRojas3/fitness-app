@@ -24,6 +24,8 @@
 
         public const string GOOGLE_CLIENTSECRET = nameof(GOOGLE_CLIENTSECRET);
 
+        public const string FACEBOOK_CLIENTID = nameof(FACEBOOK_CLIENTID);
+
         public const string JWT_CLIENTID = nameof(JWT_CLIENTID);
 
         public const string JWT_SECRET = nameof(JWT_SECRET);

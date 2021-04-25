@@ -40,7 +40,7 @@ const SignInModal = (props) => {
           </Row>
           <Row className="justify-content-center mt-2">
             <FacebookLogin
-              appId=""
+              appId="511969923263248"
               autoLoad={false}
               fields="name,email,picture"
               scope="public_profile,email"
