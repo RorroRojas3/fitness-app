@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "APPINSIGHTS_INSTRUMENTATIONKEY": "",
         "TENANT_ID": "common",
-        "MICROSOFT_CLIENTID": "123",
+        "MICROSOFT_CLIENTID": "e6a0ca00-d569-44d1-a41e-2fa6b08b59a0",
         "MICROSOFT_CLIENTSECRET": "12",
         "GOOGLE_CLIENTID": "526890719928-l2hfe3l742eongf9kicdsu973r0jojj3.apps.googleusercontent.com",
         "GOOGLE_CLIENTSECRET": "12",
