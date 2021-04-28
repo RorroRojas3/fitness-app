@@ -16,5 +16,12 @@ namespace Rodrigo.Tech.Service.Interface.Common
         /// <param name="headers"></param>
         /// <returns></returns>
         Task<HttpResponseMessage> Json(string url, HttpMethod httpMethod, Dictionary<string, string> headers = null, object body = null);
+
+        /// <summary>
+        ///     Gets authorization header for Bearer JWT token
+        /// </summary>
+        /// <param name="jwt"></param>
+        /// <returns></returns>
+        Dictionary<string, string> GetBearerJWTAuthorizationHeader(string jwt);
     }
 }

@@ -62,6 +62,7 @@ namespace Rodrigo.Tech.Service.Implementation.V1
             switch (request.LogInTypeId)
             {
                 case LogInTypeEnum.MICROSOFT:
+                    userResponse = await GetMicrosoftUser(request);
                     break;
                 case LogInTypeEnum.GOOGLE:
                     userResponse = await GetGoogleUser(request);
@@ -91,6 +92,65 @@ namespace Rodrigo.Tech.Service.Implementation.V1
                 $"Finished, " +
                 $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");
             return authorizedUserResponse;
+        }
+
+        /// <summary>
+        ///     Gets user's information from Microsoft
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        private async Task<UserResponse> GetMicrosoftUser(AuthorizedUserRequest request)
+        {
+            _logger.LogInformation($"{nameof(UserService)} - {nameof(GetMicrosoftUser)} - Started, " +
+                $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");
+            var microsoftConfig = _configuration.GetSection(ConfigurationConstants.MicrosoftGraph).Get<MicrosoftGraph>();
+
+            var url = $"{microsoftConfig.BaseUrl}/{microsoftConfig.Profile}";
+            var headers = _httpClientService.GetBearerJWTAuthorizationHeader(request.AccessToken);
+
+            _logger.LogInformation($"{nameof(UserService)} - {nameof(GetMicrosoftUser)} - " +
+                $"Calling {url}, " +
+                $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");
+            var response = await _httpClientService.Json(url, HttpMethod.Get, headers);
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError($"{nameof(UserService)} - {nameof(GetMicrosoftUser)} - " +
+                    $"Unsuccesfull call to {url}, " +
+                    $"{nameof(response.StatusCode)}: {response.StatusCode}, " +
+                    $"{nameof(responseContent)}: {responseContent}, " +
+                    $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");
+                throw new StatusCodeException(HttpStatusCode.BadRequest, $"Unable to obtain user's profile information");
+            }
+
+            var microsoftProfileResponse = JsonConvert.DeserializeObject<MicrosoftProfileResponse>(responseContent);
+            var userResponse = _mapper.Map<UserResponse>(microsoftProfileResponse);
+
+            // url = $"{microsoftConfig.BaseUrl}/{microsoftConfig.Photo}";
+            // _logger.LogInformation($"{nameof(UserService)} - {nameof(GetMicrosoftUser)} - " +
+            //     $"Calling {url}, " +
+            //     $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");
+            // response = await _httpClientService.Json(url, HttpMethod.Get, headers);
+
+            // responseContent = await response.Content.ReadAsStringAsync();
+
+            // if (!response.IsSuccessStatusCode)
+            // {
+            //     _logger.LogError($"{nameof(UserService)} - {nameof(GetMicrosoftUser)} - " +
+            //         $"Unsuccesfull call to {url}, " +
+            //         $"{nameof(response.StatusCode)}: {response.StatusCode}, " +
+            //         $"{nameof(responseContent)}: {responseContent}, " +
+            //         $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");
+            //     throw new StatusCodeException(HttpStatusCode.BadRequest, $"Unable to obtain user's profile picture");
+            // }
+
+            userResponse.Picture = "byteArray";
+
+            _logger.LogInformation($"{nameof(UserService)} - {nameof(GetMicrosoftUser)} - Finished, " +
+                $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");
+            return userResponse;
         }
 
         /// <summary>
