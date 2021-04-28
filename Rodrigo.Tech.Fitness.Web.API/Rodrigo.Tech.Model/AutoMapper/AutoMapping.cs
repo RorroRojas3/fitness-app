@@ -43,6 +43,13 @@ namespace Rodrigo.Tech.Model.AutoMapper
             CreateMap<FacebookUserInformationResponse, UserResponse>()
                 .ForMember(dst => dst.Picture, opt =>
                     opt.MapFrom(src => src.Picture.Data.Url));
+            CreateMap<MicrosoftProfileResponse, UserResponse>()
+                .ForMember(dst => dst.Email, opt =>
+                    opt.MapFrom(src => src.UserPrincipalName))
+                .ForMember(dst => dst.FirstName, opt =>
+                    opt.MapFrom(src => src.GivenName))
+                .ForMember(dst => dst.LastName, opt =>
+                    opt.MapFrom(src => src.Surname));
         }
     }
 }

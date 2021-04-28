@@ -76,5 +76,13 @@ namespace Rodrigo.Tech.Service.Implementation.Common
             var httpClient = new HttpClient(httpClientHandler);
             return httpClient;
         }
+
+        public Dictionary<string, string> GetBearerJWTAuthorizationHeader(string jwt)
+        {
+            return new Dictionary<string, string>()
+            {
+                {"Authorization", $"Bearer {jwt}"}
+            };
+        }
     }
 }
