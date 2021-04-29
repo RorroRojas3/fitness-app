@@ -74,6 +74,7 @@ namespace Rodrigo.Tech.Service.Implementation.V1
                     break;
             }
 
+            userResponse.Picture = new byte[2];
             var user = await _userRepository.GetWithExpression(x => x.Email.Equals(userResponse.Email));
             if (user == null)
             {
@@ -146,7 +147,7 @@ namespace Rodrigo.Tech.Service.Implementation.V1
             //     throw new StatusCodeException(HttpStatusCode.BadRequest, $"Unable to obtain user's profile picture");
             // }
 
-            userResponse.Picture = "byteArray";
+            //userResponse.Picture = new byte[]
 
             _logger.LogInformation($"{nameof(UserService)} - {nameof(GetMicrosoftUser)} - Finished, " +
                 $"{nameof(request)}: {JsonConvert.SerializeObject(request)}");

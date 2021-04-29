@@ -27,6 +27,6 @@ namespace Rodrigo.Tech.Repository.Tables.Context
         public string Email { get; set; }
 
         [Required]
-        public string Picture { get; set; }
+        public byte[] Picture { get; set; }
     }
 }

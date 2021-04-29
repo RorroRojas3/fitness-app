@@ -37,12 +37,11 @@ namespace Rodrigo.Tech.Model.AutoMapper
                 .ForMember(dst => dst.FirstName, opt =>
                     opt.MapFrom(src => src.GivenName))
                 .ForMember(dst => dst.LastName, opt =>
-                    opt.MapFrom(dst => dst.FamilyName));
+                    opt.MapFrom(dst => dst.FamilyName))
+                .ForMember(dst => dst.Picture, opt => opt.Ignore());
             CreateMap<UserResponse, User>();
             CreateMap<User, AuthorizedUserResponse>();
-            CreateMap<FacebookUserInformationResponse, UserResponse>()
-                .ForMember(dst => dst.Picture, opt =>
-                    opt.MapFrom(src => src.Picture.Data.Url));
+            CreateMap<FacebookUserInformationResponse, UserResponse>();
             CreateMap<MicrosoftProfileResponse, UserResponse>()
                 .ForMember(dst => dst.Email, opt =>
                     opt.MapFrom(src => src.UserPrincipalName))

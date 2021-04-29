@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Rodrigo.Tech.Repository.Migrations
 {
-    public partial class ExcerciseTable : Migration
+    public partial class FirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,6 +40,21 @@ namespace Rodrigo.Tech.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ExcerciseTypeIcon",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ExcerciseTypeId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    ContentType = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Icon = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExcerciseTypeIcon", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "File",
                 schema: "Example",
                 columns: table => new
@@ -53,6 +68,27 @@ namespace Rodrigo.Tech.Repository.Migrations
                 {
                     table.PrimaryKey("PK_File", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Picture = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.Id);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExcerciseTypeIcon_ExcerciseTypeId",
+                table: "ExcerciseTypeIcon",
+                column: "ExcerciseTypeId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -64,8 +100,14 @@ namespace Rodrigo.Tech.Repository.Migrations
                 name: "Excercise");
 
             migrationBuilder.DropTable(
+                name: "ExcerciseTypeIcon");
+
+            migrationBuilder.DropTable(
                 name: "File",
                 schema: "Example");
+
+            migrationBuilder.DropTable(
+                name: "User");
         }
     }
 }

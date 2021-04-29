@@ -8,6 +8,6 @@ namespace Rodrigo.Tech.Model.Response.V1
 
         public string Email { get; set; }
 
-        public string Picture { get; set; }
+        public byte[] Picture { get; set; }
     }
 }

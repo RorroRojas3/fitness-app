@@ -10,16 +10,16 @@ using Rodrigo.Tech.Respository.Context;
 namespace Rodrigo.Tech.Repository.Migrations
 {
     [DbContext(typeof(FitnessDatabase))]
-    [Migration("20210309012253_UpdatedExcerciseTypeIcon table")]
-    partial class UpdatedExcerciseTypeIcontable
+    [Migration("20210429015023_FirstMigration")]
+    partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.1");
+                .HasAnnotation("ProductVersion", "5.0.3")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Rodrigo.Tech.Repository.Tables.Context.Cache", b =>
                 {
@@ -121,6 +121,36 @@ namespace Rodrigo.Tech.Repository.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("File", "Example");
+                });
+
+            modelBuilder.Entity("Rodrigo.Tech.Repository.Tables.Context.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<byte[]>("Picture")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
                 });
 #pragma warning restore 612, 618
         }
