@@ -18,7 +18,6 @@
         "MICROSOFT_CLIENTID": "e6a0ca00-d569-44d1-a41e-2fa6b08b59a0",
         "MICROSOFT_CLIENTSECRET": "12",
         "GOOGLE_CLIENTID": "526890719928-l2hfe3l742eongf9kicdsu973r0jojj3.apps.googleusercontent.com",
-        "GOOGLE_CLIENTSECRET": "12",
         "FACEBOOK_CLIENTID": "511969923263248",
         "JWT_CLIENTID": "44c84abd-98fd-44cf-b904-215e618b1d93",
         "JWT_SECRET": "ebf74b8c-65ea-45e1-897d-993db02e32aa"
